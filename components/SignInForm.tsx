@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Text, Alert, StyleSheet } from 'react-native';
-import credentials from '../credentials.json'; // Importing the credentials file
+import credentials from '../credentials.json'; // Assuming credentials.json is stored in the root
 
 interface UserCredentials {
   username: string;
@@ -8,17 +8,17 @@ interface UserCredentials {
 }
 
 interface SignInFormProps {
-  navigation: any;
+  navigation: any; // Will be used to navigate to WelcomeScreen
 }
 
 const SignInForm: React.FC<SignInFormProps> = ({ navigation }) => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  // Validate the input fields
   const validateInput = () => {
+    // Basic validation for username and password
     const usernameRegex = /.{5,}/; // Username must be at least 5 characters
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/; // Password validation
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
 
     // Check if username and password meet the regex criteria
     if (!usernameRegex.test(username)) {
@@ -27,7 +27,7 @@ const SignInForm: React.FC<SignInFormProps> = ({ navigation }) => {
     }
 
     if (!passwordRegex.test(password)) {
-      Alert.alert('Invalid Password', 'Password must have at least 8 characters, one uppercase letter, one number, and one special character.');
+      Alert.alert('Invalid Password', 'Password must be at least 8 characters long, with at least one uppercase letter, one number, and one special character.');
       return;
     }
 
@@ -37,7 +37,7 @@ const SignInForm: React.FC<SignInFormProps> = ({ navigation }) => {
     if (!user) {
       Alert.alert('Invalid Credentials', 'Username or password is incorrect.');
     } else {
-      // Navigate to Welcome screen if credentials are correct
+      // Navigate to WelcomeScreen if credentials are correct
       navigation.navigate('Welcome');
     }
   };
